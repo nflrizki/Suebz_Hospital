@@ -8,6 +8,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
+  scroll-padding-top: 100px;
 }
 
 .wp {
@@ -107,9 +108,15 @@ nav.sticky .nav-content ul li a:hover {
   color: lightseagreen;
 }
 
+.slider {
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+}
+
 .slider img {
   width: 100%;
-  height: 400px;
+  height: 600px;
   object-fit: cover;
 }
 
@@ -253,11 +260,40 @@ nav.sticky .nav-content ul li a:hover {
   outline: none;
   border: none;
   cursor: pointer;
+  position: relative;
+}
+
+.video-container .video {
+  position: relative;
+}
+
+.video-container .video::after {
+  content: '▶';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  pointer-events: none;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.video-container .video:hover::after {
+  opacity: 0;
+}
+
+/* Hapus icon play saat video dalam mode active */
+.video-container .video .active::after {
+  display: none;
 }
 
 .video-container .video video:hover {
   transition: .2s linear;
-  transform: scale(1.3);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  border: 3px solid #81cef5;
 }
 
 .video-container .video .active {
@@ -269,11 +305,15 @@ nav.sticky .nav-content ul li a:hover {
   width: 80%;
   box-shadow: 0 0 0 100vh rgba(0, 0, 0, .7);
   z-index: 2;
+  border: none !important;
+  cursor: pointer;
 }
 
 .video-container .video .active:hover {
-  transition: none;
-  transform: translate(-50%, -50%) scale(1);
+  transition: none !important;
+  transform: translate(-50%, -50%) scale(1) !important;
+  border: none !important;
+  box-shadow: 0 0 0 100vh rgba(0, 0, 0, .7);
 }
 
 /*------------------------------------layanan page 2 start-------------------------------------------*/
@@ -314,6 +354,7 @@ nav.sticky .nav-content ul li a:hover {
 .bmi-card h1 {
   text-align: center;
 }
+
 .judul-bmi h2 {
   font-size: 36px;
   text-align: center;
@@ -343,22 +384,102 @@ nav.sticky .nav-content ul li a:hover {
   cursor: pointer;
 }
 
+.bmi-card button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+}
+
+.bmi-card button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+}
+
+/* BMI Result Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#result {
+  animation: fadeIn 0.5s ease-out;
+}
+
 #result {
   text-align: center;
   margin-top: 20px;
   font-weight: bold;
+  transition: all 0.3s;
 }
 
 table {
-  border-collapse:collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   width: 500px;
   margin-top: 20px;
 }
 
 th, td {
-  border: 1px solid black;
+  border: none !important;
   padding: 8px;
   text-align: left;
+  margin: 0;
+}
+
+tr {
+  border: none !important;
+}
+
+table tr {
+  border: none !important;
+}
+
+/* BMI Calculator Modern Styling */
+.bmi-card input[type="number"]:focus {
+  outline: none;
+}
+
+/* Enhanced Table Styling */
+#myTable tbody tr:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive BMI Calculator */
+@media (max-width: 768px) {
+  .katalog-card {
+    padding: 20px !important;
+  }
+
+  .bmi-card h1 {
+    font-size: 1.5rem;
+  }
+
+  #myTable {
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    padding: 10px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  #myTable {
+    font-size: 0.8rem;
+  }
+
+  th, td {
+    padding: 8px 5px;
+  }
+
+  .bmi-card form {
+    width: 100%;
+  }
+
+  .bmi-card input[type="number"],
+  .bmi-card button {
+    font-size: 14px;
+  }
 }
 /*------------------------------------BMI page end-------------------------------------------*/
 
@@ -387,7 +508,7 @@ th, td {
   padding: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  border: 1px solid #ffffff;
+  border: none;
 }
 
 .contact-form h2 {
@@ -413,7 +534,7 @@ th, td {
   background-color: #292727;
   color: #666;
   font-size: 14px;
-  border: 1px solid #ffffff;
+  border: none;
 }
 
 .contact-form form textarea {
@@ -428,11 +549,38 @@ th, td {
   border-radius: 5px;
   border: none;
   cursor: pointer;
-  border: 1px solid #ffffff;
 }
 
 .contact-form form input[type="submit"]:hover {
   background-color: #4c4343;
+}
+
+/* Popup form input focus effects */
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form textarea:focus {
+  border-color: #667eea !important;
+  box-shadow: 0 0 10px rgba(102, 126, 234, 0.3) !important;
+  outline: none !important;
+  background: #fff !important;
+}
+
+/* Popup input placeholder color */
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #999;
+  font-size: 14px;
+}
+
+/* Popup form button hover effects */
+.contact-form input[type="submit"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+}
+
+.contact-form input[type="submit"]:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
 }
 
 /* footer */
@@ -576,6 +724,7 @@ th, td {
   transition: all .3s ease-in-out;
   z-index: 1;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .footer-right button::before {
@@ -615,20 +764,247 @@ th, td {
   }
 }
 
+/* Responsive slider untuk mobile */
+@media (max-width: 768px) {
+  .slider {
+    height: 400px;
+  }
+
+  .slider img {
+    height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slider {
+    height: 300px;
+  }
+
+  .slider img {
+    height: 300px;
+  }
+}
+
 /* Style for the pop-up */
+.popup-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-content {
+  background: white;
+  width: 90%;
+  max-width: 450px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.3s ease-out;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.popup-header {
+  background: linear-gradient(135deg, #312a2a 0%, #615c5c 100%);
+  padding: 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popup-header h2 {
+  color: white;
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.popup-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+.popup-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.popup-body {
+  padding: 25px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s;
+  background: #fafafa;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #312a2a;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background: white;
+  outline: none;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #312a2a 0%, #615c5c 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.2);
+}
+
+/* Old popup styles for compatibility */
 .popup {
   display: none;
   position: fixed;
   left: 50%;
-  top: 55%;
+  top: 50%;
   transform: translate(-50%, -50%);
-  width: 450px;
-  height: 520px;
-  background: #292727;
-  border: 1px solid #ccc;
-  padding: 10px;
+  width: auto;
+  max-width: 90vw;
+  background: transparent;
+  z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .x-icon{
     color:white;
+}
+
+/* Popup animation */
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.popup[style*="block"] {
+  animation: popupFadeIn 0.3s ease-out;
+}
+
+/* Remove default borders from popup container */
+.popup > div {
+  border: none !important;
+  outline: none !important;
+  box-sizing: border-box;
+}
+
+/* Prevent horizontal scrollbar */
+body {
+  overflow-x: hidden;
+}
+
+/* Ensure popup doesn't cause scroll */
+.popup > div {
+  max-width: 450px !important;
+  margin: 0 auto !important;
+}
+
+/* Prevent horizontal scrollbar in all elements */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Close popup when clicking outside */
+.popup-container {
+  cursor: pointer;
+}
+
+.popup-content {
+  cursor: default;
+}
+
+/* Enhanced label styling for popup form */
+.contact-form label {
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.contact-form label i {
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.contact-form label span {
+  flex: 1;
+}
+
+/* Scroll offset untuk section dengan ID agar tidak tertutup header */
+section[id] {
+  scroll-margin-top: 100px;
 }

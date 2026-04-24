@@ -27,7 +27,7 @@ $message = $_POST['message'];
 // Menjalankan pernyataan SQL
 if (mysqli_query($conn, $sql)) {
 // Jika berhasil, tampilkan pesan pop-up dan arahkan ke halaman ../data_akun.php setelah pengguna menekan tombol OK
-echo '<script>alert("Ulasan berhasil dikirim."); window.location.href="index.php";</script>';
+echo '<script>alert("Ulasan berhasil dikirim."); window.location.href="./";</script>';
 } else {
 // Jika gagal, tampilkan pesan pop-up dan arahkan kembali ke halaman sebelumnya setelah pengguna menekan tombol OK
 echo '<script>alert("Error: ' . mysqli_error($conn) . '"); window.history.back();</script>';

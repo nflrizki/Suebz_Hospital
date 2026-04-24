@@ -94,7 +94,7 @@
 							$data = mysqli_query($conn, "select * from video");
 							while ($row = mysqli_fetch_assoc($data)) {
 								$video=$row['vid'];
-								echo '<div class="video"><video src="./img/video/' . $row['vid'] . '" ></div>';
+								echo '<div class="video"><video src="./img/video/' . $row['vid'] . '" muted playsinline></div>';
 							}
 						?>
 				</div>
@@ -125,7 +125,7 @@
 
 			<div>
 				<i class="fa fa-envelope"></i>
-				<p><a href="mailto:support@company.com">support@suebzclinic.xyz</a></p>
+				<p><a href="mailto:support@suebzclinic.xyz">support@suebzclinic.xyz</a></p>
 			</div>
 		</div>
 
@@ -142,25 +142,35 @@
 		</div>
 	</footer>
 	</div>
-	<div id="popup" class="popup">
-		<i class="fa fa-xmark x-icon" onclick="document.getElementById('popup').style.display = 'none';"></i>
-		<div class="contact-form">
-			<h2 class="footer-paragraph">Kritik & Saran</h2>
-			<form method="POST" action="m_add_saran.php" enctype="multipart/form-data">
-				<label>Name</label>
-				<input type="text" id="name" name="name" placeholder="Enter your name" />
-
-				<label>Email</label>
-				<input type="email" id="email" name="email" placeholder="Enter your email" />
-
-				<label>Subject</label>
-				<input type="text" id="subject" name="subject" placeholder="Enter subject" />
-
-				<label>Message</label>
-				<textarea id="message" name="message" placeholder="Enter your message"></textarea>
-
-				<input type="submit" value="Send Message" />
-			</form>
+	<div id="popup" class="popup-container">
+		<div class="popup-content">
+			<div class="popup-header">
+				<h2>Kritik & Saran</h2>
+				<button class="popup-close" onclick="closePopup()">
+					<i class="fas fa-times"></i>
+				</button>
+			</div>
+			<div class="popup-body">
+				<form method="POST" action="m_add_saran.php" enctype="multipart/form-data" id="feedbackForm">
+					<div class="form-group">
+						<label for="name">Nama</label>
+						<input type="text" id="name" name="name" required placeholder="Masukkan nama lengkap" />
+					</div>
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input type="email" id="email" name="email" required placeholder="Masukkan email" />
+					</div>
+					<div class="form-group">
+						<label for="subject">Subjek</label>
+						<input type="text" id="subject" name="subject" required placeholder="Masukkan subjek" />
+					</div>
+					<div class="form-group">
+						<label for="message">Pesan</label>
+						<textarea id="message" name="message" required placeholder="Masukkan pesan Anda"></textarea>
+					</div>
+					<button type="submit" class="submit-btn">Kirim Pesan</button>
+				</form>
+			</div>
 		</div>
 	</div>
 	<script>
@@ -191,26 +201,75 @@
 		// popup kritik&saran 
 		function showPopup() {
 			var popup = document.getElementById("popup");
-			popup.style.display = "block";
+			popup.style.display = "flex";
 
 		}
 
-		// Video Gallery 
+			function closePopup() {
+				var popup = document.getElementById("popup");
+
+			// Close popup when clicking outside
+			document.addEventListener("DOMContentLoaded", function() {
+				var popup = document.getElementById("popup");
+				popup.addEventListener("click", function(e) {
+					if (e.target === popup) {
+						closePopup();
+					}
+				});
+			});
+				popup.style.display = "none";
+			}
+
+		// Video Gallery - Autoplay on hover + Click for large preview
 		var video = document.querySelectorAll('video')
 
-		video.forEach(play => play.addEventListener('click', () => {
-			play.classList.toggle('active');
-
-			if (play.paused) {
+		video.forEach(play => {
+			// Autoplay on hover
+			play.addEventListener('mouseover', () => {
 				play.play();
-			} else {
-				play.pause();
-				play.currentTime = 0;
-			}
-		}));
+			});
+
+			play.addEventListener('mouseout', () => {
+				// Jangan pause jika video sedang dalam mode active (large preview)
+				if (!play.classList.contains('active')) {
+					play.pause();
+					play.currentTime = 0;
+				}
+			});
+
+			// Click untuk large preview
+			play.addEventListener('click', (e) => {
+					e.stopPropagation(); // Mencegah klik tembus ke overlay
+
+					// Tutup semua video aktif lainnya
+					video.forEach(v => {
+						if (v !== play && v.classList.contains('active')) {
+							v.classList.remove('active');
+							v.pause();
+						}
+					});
+				play.classList.toggle('active');
+
+				if (play.classList.contains('active')) {
+					play.play();
+				} else {
+					play.pause();
+				}
+			});
+		});
 
 		// scroll to top
-		let mybutton = document.getElementById("myBtn");
+		// Klik di luar video untuk menutup large preview
+			document.addEventListener('click', () => {
+				video.forEach(play => {
+					if (play.classList.contains('active')) {
+						play.classList.remove('active');
+						play.pause();
+					}
+				});
+			});
+
+			let mybutton = document.getElementById("myBtn");
 		window.onscroll = function () { scrollFunction() };
 
 		function scrollFunction() {
