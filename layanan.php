@@ -135,8 +135,7 @@
 				</div>
 			</div>
 		</footer>
-	</div>
-		<div id="popup" class="popup-container">
+	<div id="popup" class="popup-container">
 			<div class="popup-content">
 				<div class="popup-header">
 					<h2>Kritik & Saran</h2>
@@ -166,43 +165,7 @@
 					</form>
 				</div>
 			</div>
-		</div>
-
-					<div style="margin-bottom: 12px;">
-						<label style="display: flex; align-items: center; margin-bottom: 5px; font-weight: 600; color: #333; font-size: 0.9rem;">
-							<i class="fas fa-envelope" style="margin-right: 8px; color: #667eea; width: 18px;"></i>
-							<span>Email</span>
-						</label>
-						<input type="email" id="email" name="email"
-							   style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; transition: all 0.3s; background: #fafafa; color: #333;"
-							   placeholder="Enter your email" />
-					</div>
-
-					<div style="margin-bottom: 12px;">
-						<label style="display: flex; align-items: center; margin-bottom: 5px; font-weight: 600; color: #333; font-size: 0.9rem;">
-							<i class="fas fa-heading" style="margin-right: 8px; color: #667eea; width: 18px;"></i>
-							<span>Subject</span>
-						</label>
-						<input type="text" id="subject" name="subject"
-							   style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; transition: all 0.3s; background: #fafafa; color: #333;"
-							   placeholder="Enter subject" />
-					</div>
-
-					<div style="margin-bottom: 15px;">
-						<label style="display: flex; align-items: center; margin-bottom: 5px; font-weight: 600; color: #333; font-size: 0.9rem;">
-							<i class="fas fa-comment" style="margin-right: 8px; color: #667eea; width: 18px;"></i>
-							<span>Message</span>
-						</label>
-						<textarea id="message" name="message"
-								  style="width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; transition: all 0.3s; background: #fafafa; color: #333; min-height: 90px; resize: vertical; line-height: 1.4;"
-								  placeholder="Enter your message"></textarea>
-					</div>
-
-					<input type="submit" value="Kirim Pesan"
-						   style="width: 100%; padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s;" />
-				</form>
-			</div>
-		</div>
+	</div>
 	</div>
 	<script>
 		// nav sticky
@@ -218,11 +181,14 @@
 		// popup kritik&saran
 		function showPopup() {
 			var popup = document.getElementById("popup");
+			popup.style.display = "flex";
+		}
 
 		function closePopup() {
 			var popup = document.getElementById("popup");
+			popup.style.display = "none";
+		}
 
-		// Close popup when clicking outside
 		document.addEventListener("DOMContentLoaded", function() {
 			var popup = document.getElementById("popup");
 			popup.addEventListener("click", function(e) {
@@ -231,11 +197,6 @@
 				}
 			});
 		});
-			popup.style.display = "none";
-		}
-			popup.style.display = "flex";
-
-		}
 
 		// scroll to top
 		let mybutton = document.getElementById("myBtn");
